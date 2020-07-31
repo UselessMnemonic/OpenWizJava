@@ -1,6 +1,13 @@
 package com.madrigal.openwiz;
 
+/**
+ * Class for common operations.
+ */
 public class Utils {
+
+    // Byte-to-hex string conversion,
+    // found via this post:
+    // https://stackoverflow.com/questions/9655181/how-to-convert-a-byte-array-to-a-hex-string-in-java
     public static final char[] HEX = "0123456789abcdef".toCharArray();
     public static String bytesToHexString(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];

@@ -39,12 +39,12 @@ public class WizHandle {
         if (ip == null) throw new IllegalArgumentException("IP cannot be null.");
         if (mac.length() != 12) throw new IllegalArgumentException("MAC must be 12 hex digits.");
 
-        for (char c : mac.toCharArray()) {
+
+        this.mac = mac.toLowerCase();
+        for (char c : this.mac.toCharArray()) {
             if ((c < '0' || c > '9') &&
                 (c < 'a' || c > 'f')) throw new IllegalArgumentException("MAC must be a hex string.");
         }
-
-        this.mac = mac.toLowerCase();
         this.ip = ip;
     }
 }
