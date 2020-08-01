@@ -1,5 +1,8 @@
 package com.madrigal.openwiz;
-import com.google.gson.*;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -36,8 +39,9 @@ public class WizState {
 
     /**
      * Generates an object that can be used to register the host with a Wiz light.
-     * @param homeId The Home ID of the Wiz light
-     * @param hostIp The IPv4 of the host machine, in standard dot notation
+     *
+     * @param homeId  The Home ID of the Wiz light
+     * @param hostIp  The IPv4 of the host machine, in standard dot notation
      * @param hostMac The MAC of the host machine's interface card
      * @return A WizState
      */
@@ -54,6 +58,7 @@ public class WizState {
 
     /**
      * Generates an object that can be used to request the current state of a light.
+     *
      * @return An object containing the request.
      */
     public static WizState MakeGetPilot() {
@@ -64,6 +69,7 @@ public class WizState {
 
     /**
      * Generates an object that can be used to request the user's configuration of a light.
+     *
      * @return An object containing the request.
      */
     public static WizState MakeGetUserConfig() {
@@ -74,6 +80,7 @@ public class WizState {
 
     /**
      * Generates an object that can be used to request the internal configuration of a light.
+     *
      * @return An object containing the request.
      */
     public static WizState MakeGetSystemConfig() {
@@ -84,7 +91,8 @@ public class WizState {
 
     /**
      * Deserializes JSON data from a byte array.
-     * @param data The data to deserialize.
+     *
+     * @param data   The data to deserialize.
      * @param length The length of the data to deserialize
      * @return A WizState, or null if the data is not valid json
      */
@@ -94,6 +102,7 @@ public class WizState {
 
     /**
      * Deserializes a JSON string into a WizState object.
+     *
      * @param json The JSON string to deserialize.
      * @return A WizState, or null if the string is not valid json.
      */
@@ -101,14 +110,14 @@ public class WizState {
         WizState state = null;
         try {
             state = gson.fromJson(json, WizState.class);
-        }
-        catch (JsonSyntaxException ignored) {
+        } catch (JsonSyntaxException ignored) {
         }
         return state;
     }
 
     /**
      * Serializes this object into a byte array for transmission.
+     *
      * @return A utf-8 encoded JSON string as a byte array.
      */
     public byte[] toUTF8() {
@@ -117,6 +126,7 @@ public class WizState {
 
     /**
      * Gets the JSON representation of this state.
+     *
      * @return A JSON string.
      */
     @Override

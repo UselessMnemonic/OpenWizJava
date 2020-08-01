@@ -1,7 +1,9 @@
 package com.madrigal.openwiz;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.Inet4Address;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Consumer;
 
@@ -52,28 +54,22 @@ public class WizDiscoveryService {
                 DatagramPacket packet = new DatagramPacket(data, data.length);
                 discoverySocket.receive(packet);
                 WizState wState = WizState.parseUTF8(data, 0, packet.getLength());
-                if (wState == null)
-                {
+                if (wState == null) {
                     System.out.printf("[WARNING] WizDiscoveryService@%s: Got bad json message:\n\t%s\n", hostIp, new String(data, StandardCharsets.UTF_8));
-                }
-                else if (wState.error != null)
-                {
+                } else if (wState.error != null) {
                     System.out.printf("[WARNING] WizDiscoveryService@%s: Encountered ", hostIp);
 
                     if (wState.error.code == null) System.out.print("unknwon error");
                     else System.out.printf("error %d", wState.error.code);
                     if (wState.error.message != null) System.out.printf(" -- %s", wState.error.message);
                     System.out.printf(" from %s\n", packet.getAddress().toString());
-                }
-                else if (wState.result != null)
-                {
+                } else if (wState.result != null) {
                     System.out.printf("[INFO] WizDiscoveryService@%s: Got response:\n", hostIp);
                     System.out.printf("\t%s\n", wState.toString());
-                    handleConsumer.accept(new WizHandle(wState.result.mac, (Inet4Address)packet.getAddress()));
+                    handleConsumer.accept(new WizHandle(wState.result.mac, (Inet4Address) packet.getAddress()));
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
